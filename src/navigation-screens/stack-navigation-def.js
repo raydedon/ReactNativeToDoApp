@@ -3,8 +3,8 @@ import HomeScreen from './home-screen';
 import ChatScreen from './chat-screen';
 import TabScreenNavigator from './tab-navigation-def';
 import ListViewTasks from "../views/list-view-tasks";
-import TaskDetails from "./task-details";
-import CreateTaskScreen from "./create-task";
+import TaskDetails from "./task-details-screen";
+import CreateTaskScreen from "./create-task-screen";
 
 const StackScreenNavigator = StackNavigator({
         Home: {

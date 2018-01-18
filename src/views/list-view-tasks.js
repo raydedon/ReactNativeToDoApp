@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 8,
         fontSize: 15,
         backgroundColor: '#FFFFFF',
-        borderRadius: 2,
+        borderRadius: 4,
     },
     listItemContainer: {
         flex: 1,
@@ -59,6 +59,7 @@ export default class ListViewTasks extends Component {
             refreshing: false
         };
     }
+
     componentDidMount() {
         // this.makeRemoteRequest();
     }
@@ -162,7 +163,7 @@ export default class ListViewTasks extends Component {
                             <View style={styles.listItemContainer}>
                                 <Image source={{ uri: item.picture.large}} style={styles.photo} />
                                 <Text style={styles.text}>{`${item.name.first} ${item.name.last}`}</Text>
-                                <Icon name="angle-right" size={30} color="#900" />
+                                <Icon name="angle-right" size={30} color="#900"/>
                             </View>
                         </TouchableOpacity>
                     )}

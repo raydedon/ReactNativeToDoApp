@@ -4,4 +4,4 @@ import FlatListDemo from "./src/FlatListDemo";
 import ListViewTasks from "./src/views/list-view-tasks";
 
 
-AppRegistry.registerComponent('ReactNativeToDoApp', () => ListViewTasks);
+AppRegistry.registerComponent('ReactNativeToDoApp', () => App);

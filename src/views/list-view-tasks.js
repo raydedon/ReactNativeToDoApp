@@ -8,7 +8,11 @@ import {
     Image,
     TextInput,
     ActivityIndicator,
+    TouchableOpacity,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import ActionButton from 'react-native-action-button';
+import data from '../../data';
 
 const styles = StyleSheet.create({
     container: {
@@ -48,7 +52,7 @@ export default class ListViewTasks extends Component {
 
         this.state = {
             loading: false,
-            data: [],
+            data: data,
             page: 1,
             seed: 1,
             error: null,
@@ -56,7 +60,7 @@ export default class ListViewTasks extends Component {
         };
     }
     componentDidMount() {
-        this.makeRemoteRequest();
+        // this.makeRemoteRequest();
     }
 
     makeRemoteRequest = () => {
@@ -80,6 +84,7 @@ export default class ListViewTasks extends Component {
     };
 
     handleRefresh = () => {
+/*
         this.setState(
             {
                 page: 1,
@@ -90,6 +95,7 @@ export default class ListViewTasks extends Component {
                 this.makeRemoteRequest();
             }
         );
+*/
     };
 
     handleLoadMore = () => {
@@ -110,7 +116,9 @@ export default class ListViewTasks extends Component {
                     height: 1,
                     width: "86%",
                     backgroundColor: "#CED0CE",
-                    marginLeft: "14%"
+                    flex: 1,
+                    flexDirection: 'row',
+                    alignItems: 'center',
                 }}
             />
         );
@@ -150,11 +158,14 @@ export default class ListViewTasks extends Component {
                 <FlatList
                     data={this.state.data}
                     renderItem={({ item }) => (
-                        <View style={styles.listItemContainer}>
-                            <Image source={{ uri: item.picture.large}} style={styles.photo} />
-                            <Text style={styles.text}>{`${item.name.first} ${item.name.last}`}</Text>
-                        </View>
-                        )}
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('TaskDetails', { ...item })}>
+                            <View style={styles.listItemContainer}>
+                                <Image source={{ uri: item.picture.large}} style={styles.photo} />
+                                <Text style={styles.text}>{`${item.name.first} ${item.name.last}`}</Text>
+                                <Icon name="angle-right" size={30} color="#900" />
+                            </View>
+                        </TouchableOpacity>
+                    )}
                     keyExtractor={item => item.email}
                     ItemSeparatorComponent={this.renderSeparator}
                     ListHeaderComponent={this.renderHeader}
@@ -163,6 +174,10 @@ export default class ListViewTasks extends Component {
                     refreshing={this.state.refreshing}
                     onEndReached={this.handleLoadMore}
                     onEndReachedThreshold={50}
+                />
+                <ActionButton
+                    buttonColor="rgba(231,76,60,1)"
+                    onPress={() => this.props.navigation.navigate('CreateTaskScreen')}
                 />
             </View>
         );

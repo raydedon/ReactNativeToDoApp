@@ -57,8 +57,11 @@ export default class ListViewTasks extends Component {
             page: 1,
             seed: 1,
             error: null,
-            refreshing: false
+            refreshing: false,
+            searchText: ''
         };
+
+        this.filterData = this.filterData.bind(this);
     }
 
     componentDidMount() {
@@ -134,10 +137,18 @@ export default class ListViewTasks extends Component {
                 <TextInput
                     style={styles.input}
                     placeholder="Search..."
-                    onChangeText={(text) => console.log('searching for ', text)}
+                    value={this.state.searchText}
+                    onChangeText={(searchText) => this.setState({searchText})}
                 />
             </View>
         );
+    };
+
+    filterData = () => {
+        let { data, searchText } = this.state;
+        return searchText === ''
+            ? data
+            : data.filter(({ email }) => new RegExp(searchText, 'i').test(email));
     };
 
     renderFooter = () => {
@@ -174,10 +185,11 @@ export default class ListViewTasks extends Component {
 
     render() {
         const { params = {} } = this.props.navigation.state;
+        let filteredData = this.filterData();
         return (
             <View style={styles.container}>
                 <FlatList
-                    data={this.state.data}
+                    data={filteredData}
                     renderItem={({ item }) => (
                         <TouchableOpacity onPress={() => this.props.navigation.navigate('TaskDetails', { ...item, updateItemOnState: this.updateItemOnState })}>
                             <View style={styles.listItemContainer}>

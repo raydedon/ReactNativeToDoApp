@@ -1,7 +1,7 @@
 import { AppRegistry } from 'react-native';
-import App from './src/navigation-screens/app';
-import FlatListDemo from "./src/FlatListDemo";
-import ListViewTasks from "./src/views/list-view-tasks";
+import CoinRootNavigator from "./src/coins/index";
+import TabScreenNavigator from './src/navigation-screens/tab-navigation-def';
+import StackScreenNavigator from './src/navigation-screens/stack-navigation-def';
 
 
-AppRegistry.registerComponent('ReactNativeToDoApp', () => App);
+AppRegistry.registerComponent('ReactNativeToDoApp', () => StackScreenNavigator);

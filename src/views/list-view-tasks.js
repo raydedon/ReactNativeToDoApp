@@ -31,19 +31,22 @@ const styles = StyleSheet.create({
         borderRadius: 4,
     },
     listItemContainer: {
-        flex: 1,
         padding: 12,
         flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'space-between'
     },
     text: {
         marginLeft: 12,
         fontSize: 16,
+        textAlign: 'left'
     },
     photo: {
         height: 40,
         width: 40,
         borderRadius: 20,
+    },
+    icon: {
     },
 });
 
@@ -138,6 +141,7 @@ export default class ListViewTasks extends Component {
                     style={styles.input}
                     placeholder="Search..."
                     value={this.state.searchText}
+                    underlineColorAndroid="transparent"
                     onChangeText={(searchText) => this.setState({searchText})}
                 />
             </View>
@@ -195,7 +199,7 @@ export default class ListViewTasks extends Component {
                             <View style={styles.listItemContainer}>
                                 <Image source={{ uri: item.picture.large}} style={styles.photo} />
                                 <Text style={styles.text}>{`${item.name.first} ${item.name.last}`}</Text>
-                                <Icon name="angle-right" size={30} color="#900"/>
+                                <Icon name="angle-right" size={30} color="#900" style={styles.icon}/>
                             </View>
                         </TouchableOpacity>
                     )}

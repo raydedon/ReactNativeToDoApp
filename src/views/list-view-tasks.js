@@ -9,6 +9,7 @@ import {
     TextInput,
     ActivityIndicator,
     TouchableOpacity,
+    Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ActionButton from 'react-native-action-button';
@@ -100,6 +101,7 @@ export default class ListViewTasks extends Component {
     };
 
     handleLoadMore = () => {
+/*
         this.setState(
             {
                 page: this.state.page + 1
@@ -108,6 +110,7 @@ export default class ListViewTasks extends Component {
                 this.makeRemoteRequest();
             }
         );
+*/
     };
 
     renderSeparator = () => {
@@ -153,13 +156,30 @@ export default class ListViewTasks extends Component {
         );
     };
 
+    addNewItemOnState = (data) => {
+        this.setState({data: [...this.state.data, data]});
+    };
+
+    updateItemOnState = (data) => {
+        let updatedData = this.state.data.map(item => {
+            if(item.email === data.email) {
+                item.name = JSON.parse(JSON.stringify(data.name));
+            }
+            return item;
+        });
+        this.setState((prevState) => {
+            return Object.assign({}, prevState, {data: updatedData});
+        });
+    };
+
     render() {
+        const { params = {} } = this.props.navigation.state;
         return (
             <View style={styles.container}>
                 <FlatList
                     data={this.state.data}
                     renderItem={({ item }) => (
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('TaskDetails', { ...item })}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('TaskDetails', { ...item, updateItemOnState: this.updateItemOnState })}>
                             <View style={styles.listItemContainer}>
                                 <Image source={{ uri: item.picture.large}} style={styles.photo} />
                                 <Text style={styles.text}>{`${item.name.first} ${item.name.last}`}</Text>
@@ -180,6 +200,7 @@ export default class ListViewTasks extends Component {
                     buttonColor="rgba(231,76,60,1)"
                     onPress={() => this.props.navigation.navigate('CreateTaskScreen')}
                 />
+                <Text>{params.user}</Text>
             </View>
         );
     }
